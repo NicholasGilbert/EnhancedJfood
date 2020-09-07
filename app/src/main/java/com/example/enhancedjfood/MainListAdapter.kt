@@ -39,6 +39,7 @@ class MainListAdapter(inContext: MenuFragment,
         val lblListHeader : TextView = convertView!!.findViewById(R.id.lblListHeader)
         lblListHeader.setTypeface(null, Typeface.BOLD)
         lblListHeader.setText(headerTitle.sellerName)
+
         return convertView
     }
 
