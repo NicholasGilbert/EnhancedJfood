@@ -21,7 +21,7 @@ interface RetrofitInterface {
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .baseUrl("http://192.168.0.9:8080/")
-//                .baseUrl("http://192.168.43.99:8080/")
+//                .baseUrl("http://192.168.43.235:8080/")
                 .build()
 
             return retrofit.create(RetrofitInterface::class.java)
