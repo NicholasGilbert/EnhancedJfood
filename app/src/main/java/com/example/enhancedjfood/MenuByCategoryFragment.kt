@@ -39,29 +39,29 @@ class MenuByCategoryFragment : Fragment(R.layout.fragment_menu_by_category) {
                 handler.postDelayed(this, 30000)
             }
         })
-//        lvExp.setOnChildClickListener { parent, v, groupPosition, childPosition, id ->
-//            val selected: Food = childMapping.get(listCategory.get(groupPosition))!!.get(childPosition)
-//            val bundle: Bundle = Bundle()
-//            bundle.putInt("customer", customerId)
-//            bundle.putInt("food", selected.foodId)
-//            val nextFrag: BuatPesananFragment = BuatPesananFragment()
-//            nextFrag.arguments = bundle
-//            activity!!.supportFragmentManager.beginTransaction().apply {
-//                replace(R.id.flFragment, nextFrag).addToBackStack("login")
-//                commit()
-//            }
-//            false
-//        }
-//        pesanan.setOnClickListener {
-//            val bundle: Bundle = Bundle()
-//            bundle.putInt("customer", customerId)
-//            val nextFrag: PesananFragment = PesananFragment()
-//            nextFrag.arguments = bundle
-//            activity!!.supportFragmentManager.beginTransaction().apply {
-//                replace(R.id.flFragment, nextFrag).addToBackStack("login")
-//                commit()
-//            }
-//        }
+        lvExp.setOnChildClickListener { parent, v, groupPosition, childPosition, id ->
+            val selected: Food = childMapping.get(listCategory.get(groupPosition))!!.get(childPosition)
+            val bundle: Bundle = Bundle()
+            bundle.putInt("customer", customerId)
+            bundle.putInt("food", selected.foodId)
+            val nextFrag: BuatPesananFragment = BuatPesananFragment()
+            nextFrag.arguments = bundle
+            activity!!.supportFragmentManager.beginTransaction().apply {
+                replace(R.id.flFragment, nextFrag).addToBackStack("login")
+                commit()
+            }
+            false
+        }
+        pesanan.setOnClickListener {
+            val bundle: Bundle = Bundle()
+            bundle.putInt("customer", customerId)
+            val nextFrag: PesananFragment = PesananFragment()
+            nextFrag.arguments = bundle
+            activity!!.supportFragmentManager.beginTransaction().apply {
+                replace(R.id.flFragment, nextFrag).addToBackStack("login")
+                commit()
+            }
+        }
     }
 
     fun createNotificationChannel(context: Context, importance: Int, showBadge: Boolean, name: String, description: String) {
