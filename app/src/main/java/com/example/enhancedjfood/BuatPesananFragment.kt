@@ -133,7 +133,7 @@ class BuatPesananFragment : Fragment(R.layout.fragment_buat_pesanan) {
                             Toast.makeText(context, "Invoice number :" + response.body()!!.invoiceId.toString() + " created", Toast.LENGTH_LONG).show()
                             val bundle: Bundle = Bundle()
                             bundle.putInt("customer", customerId)
-                            val nextFrag: MenuFragment = MenuFragment()
+                            val nextFrag: TabFragment = TabFragment()
                             nextFrag.arguments = bundle
                             activity!!.supportFragmentManager.beginTransaction().apply {
                                 replace(R.id.flFragment, nextFrag)

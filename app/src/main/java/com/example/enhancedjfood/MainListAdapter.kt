@@ -8,15 +8,31 @@ import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.TextView
 
-class MainListAdapter(inContext: MenuFragment,
-                      inListSeller: ArrayList<Seller>,
-                      inChildMapping: HashMap<Seller, ArrayList<Food>>) : BaseExpandableListAdapter() {
+class MainListAdapter : BaseExpandableListAdapter {
+    constructor(inContext: MenuFragment,
+                inListSeller: ArrayList<String>,
+                inChildMapping: HashMap<String, ArrayList<Food>>) : super() {
+        check = 1
+        _contextHolder1 = inContext
+        _listSeller = inListSeller
+        _childMapping = inChildMapping
+    }
+    constructor(inContext: MenuByCategoryFragment,
+                inListSeller: ArrayList<String>,
+                inChildMapping: HashMap<String, ArrayList<Food>>) : super() {
+        check = 2
+        _contextHolder2 = inContext
+        _listSeller = inListSeller
+        _childMapping = inChildMapping
+    }
 
-    val _context = inContext
-    val _listSeller = inListSeller
-    val _childMapping = inChildMapping
+    var check: Int = 0
+    lateinit var _contextHolder1: MenuFragment
+    lateinit var _contextHolder2: MenuByCategoryFragment
+    var _listSeller: ArrayList<String>
+    var _childMapping: HashMap<String, ArrayList<Food>>
 
-    override fun getGroup(groupPosition: Int): Seller  {
+    override fun getGroup(groupPosition: Int): String  {
         return _listSeller.get(groupPosition)
     }
 
@@ -29,16 +45,22 @@ class MainListAdapter(inContext: MenuFragment,
     }
 
     override fun getGroupView(groupPosition: Int, isExpanded: Boolean, inConvertView: View?, parent: ViewGroup?): View {
-        val headerTitle: Seller = getGroup(groupPosition)
+        val headerTitle: String = getGroup(groupPosition)
         var convertView = inConvertView
         if (convertView == null){
-            val infalInflater: LayoutInflater = _context.layoutInflater
-            convertView = infalInflater.inflate(R.layout.layout_seller, null)
+            if (check == 1) {
+                val infalInflater: LayoutInflater = _contextHolder1.layoutInflater
+                convertView = infalInflater.inflate(R.layout.layout_seller, null)
+            }
+            else if (check == 2) {
+                val infalInflater: LayoutInflater = _contextHolder2.layoutInflater
+                convertView = infalInflater.inflate(R.layout.layout_seller, null)
+            }
         }
 
         val lblListHeader : TextView = convertView!!.findViewById(R.id.lblListHeader)
         lblListHeader.setTypeface(null, Typeface.BOLD)
-        lblListHeader.setText(headerTitle.sellerName)
+        lblListHeader.setText(headerTitle)
 
         return convertView
     }
@@ -59,8 +81,14 @@ class MainListAdapter(inContext: MenuFragment,
         val childText: Food = getChild(groupPosition, childPosition)
         var convertView = inConvertView
         if (convertView == null){
-            val infalInflater: LayoutInflater = _context.layoutInflater
-            convertView = infalInflater.inflate(R.layout.layout_food, null)
+            if (check == 1) {
+                val infalInflater: LayoutInflater = _contextHolder1.layoutInflater
+                convertView = infalInflater.inflate(R.layout.layout_food, null)
+            }
+            else if (check == 2) {
+                val infalInflater: LayoutInflater = _contextHolder2.layoutInflater
+                convertView = infalInflater.inflate(R.layout.layout_food, null)
+            }
         }
 
         val txtListChild: TextView = convertView!!.findViewById(R.id.lblListItem)

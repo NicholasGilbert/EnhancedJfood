@@ -41,7 +41,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     Toast.makeText(context, "Login Successful", Toast.LENGTH_SHORT).show()
                     val bundle: Bundle = Bundle()
                     bundle.putInt("customer", response.body()!!.customerId)
-                    val nextFrag: MenuFragment = MenuFragment()
+                    val nextFrag: TabFragment = TabFragment()
                     nextFrag.arguments = bundle
                     activity!!.supportFragmentManager.beginTransaction().apply {
                         replace(R.id.flFragment, nextFrag).addToBackStack("login")

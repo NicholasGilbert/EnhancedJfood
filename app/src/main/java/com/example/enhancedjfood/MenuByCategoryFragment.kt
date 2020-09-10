@@ -10,27 +10,24 @@ import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat.getSystemService
-import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_menu.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
-class MenuFragment : Fragment(R.layout.fragment_menu) {
+class MenuByCategoryFragment : Fragment(R.layout.fragment_menu_by_category) {
     private val retrofitInterface by lazy{
         RetrofitInterface.create()
     }
-    val listSeller: ArrayList<String> = ArrayList<String>()
+    val listCategory: ArrayList<String> = ArrayList<String>()
     val listFood: ArrayList<Food> = ArrayList<Food>()
     var childMapping: HashMap<String, ArrayList<Food>> = HashMap<String, ArrayList<Food>>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         super.onViewCreated(view, savedInstanceState)
         childMapping.clear()
         Toast.makeText(context, "Please enter your order", Toast.LENGTH_LONG).show()
@@ -43,7 +40,7 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
             }
         })
 //        lvExp.setOnChildClickListener { parent, v, groupPosition, childPosition, id ->
-//            val selected: Food = childMapping.get(listSeller.get(groupPosition))!!.get(childPosition)
+//            val selected: Food = childMapping.get(listCategory.get(groupPosition))!!.get(childPosition)
 //            val bundle: Bundle = Bundle()
 //            bundle.putInt("customer", customerId)
 //            bundle.putInt("food", selected.foodId)
@@ -105,13 +102,13 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
                                 locationHolder)
 
                             var sellerCheck: Boolean = true
-                            for (seller in listSeller){
-                                if (sellerHolder.sellerName == seller){
+                            for (category in listCategory){
+                                if (foodHolder.foodCategory == category){
                                     sellerCheck = false
                                 }
                             }
                             if (sellerCheck){
-                                listSeller.add(sellerHolder.sellerName)
+                                listCategory.add(foodHolder.foodCategory)
                             }
                             var foodCheck: Boolean = true
                             for (food in listFood){
@@ -123,14 +120,14 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
                                 listFood.add(foodHolder)
                             }
                         }
-                        for (seller in listSeller) {
+                        for (category in listCategory) {
                             val temp: ArrayList<Food> = ArrayList<Food>()
                             for (food in listFood){
-                                if (food.foodSeller.sellerName.equals(seller)){
+                                if (food.foodCategory.equals(category)){
                                     temp.add(food)
                                 }
                             }
-                            childMappingHolder.put(seller, temp)
+                            childMappingHolder.put(category, temp)
                         }
                         if (childMappingHolder != childMapping){
 //                            val diff = childMappingHolder
@@ -160,9 +157,9 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
                                 notify(1001, builder.build())
                             }
                             childMapping = childMappingHolder
-                            val listAdapter: MainListAdapter = MainListAdapter(this@MenuFragment, listSeller, childMapping)
+                            val listAdapter: MainListAdapter = MainListAdapter(this@MenuByCategoryFragment, listCategory, childMapping)
                             lvExp.setAdapter(listAdapter)
-                            for (sellerCount in listSeller.indices){
+                            for (sellerCount in listCategory.indices){
                                 lvExp.expandGroup(sellerCount)
                             }
                         }
